@@ -1,5 +1,7 @@
 package PTUDHTTT.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,6 +17,16 @@ public class Product {
 	private int sell_number;
 	private int created_at;
 	private int updated_at;
+	private boolean is_available;
+	private String id_category;
+	private String store_id;
+	public String getStore_id() {
+		return store_id;
+	}
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
+	}
+	private List<String> images;
 	public String getId() {
 		return id;
 	}
@@ -39,18 +51,6 @@ public class Product {
 	public void setUnit_price(double unit_price) {
 		this.unit_price = unit_price;
 	}
-	public int getCreated_at() {
-		return created_at;
-	}
-	public void setCreated_at(int created_at) {
-		this.created_at = created_at;
-	}
-	public int getUpdated_at() {
-		return updated_at;
-	}
-	public void setUpdated_at(int updated_at) {
-		this.updated_at = updated_at;
-	}
 	public String getUnit_product_name() {
 		return unit_product_name;
 	}
@@ -69,24 +69,35 @@ public class Product {
 	public void setSell_number(int sell_number) {
 		this.sell_number = sell_number;
 	}
-	public int getCreate_at() {
+	public int getCreated_at() {
 		return created_at;
 	}
-	public void setCreate_at(int created_at) {
+	public void setCreated_at(int created_at) {
 		this.created_at = created_at;
 	}
-	public int getUpdate_at() {
+	public int getUpdated_at() {
 		return updated_at;
 	}
-	public void setUpdate_at(int updated_at) {
+	public void setUpdated_at(int updated_at) {
 		this.updated_at = updated_at;
 	}
-	public String getProvider_id() {
-		return provider_id;
+	public boolean isIs_available() {
+		return is_available;
 	}
-	public void setProvider_id(String provider_id) {
-		this.provider_id = provider_id;
+	public void setIs_available(boolean is_available) {
+		this.is_available = is_available;
 	}
-	private String provider_id;
+	public String getId_category() {
+		return id_category;
+	}
+	public void setId_category(String id_category) {
+		this.id_category = id_category;
+	}
+	public List<String> getImages() {
+		return images;
+	}
+	public void setImages(List<String> images) {
+		this.images = images;
+	}
 }
 

@@ -1,24 +1,19 @@
 package PTUDHTTT.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-@Document(collection = "Customers")
-public class Customer {
+
+public class Store {
 	@Id
 	private String id;
 	private String name;
 	private int created_at;
 	private int updated_at;
-	private String avatar_url;
 	private String cmnd;
 	private String email;
 	private String district;
 	private String ward;
 	private String street;
 	private String city;
-	private String phone;
-	private String password;
-	private int sex;
 	public String getId() {
 		return id;
 	}
@@ -42,12 +37,6 @@ public class Customer {
 	}
 	public void setUpdated_at(int updated_at) {
 		this.updated_at = updated_at;
-	}
-	public String getAvatar_url() {
-		return avatar_url;
-	}
-	public void setAvatar_url(String avatar_url) {
-		this.avatar_url = avatar_url;
 	}
 	public String getCmnd() {
 		return cmnd;
@@ -97,23 +86,11 @@ public class Customer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getSex() {
-		return sex;
-	}
-	public void setSex(int sex) {
-		this.sex = sex;
-	}
 	public boolean isIs_enabled() {
 		return is_enabled;
 	}
 	public void setIs_enabled(boolean is_enabled) {
 		this.is_enabled = is_enabled;
-	}
-	public double getTotal_amount_paid() {
-		return total_amount_paid;
-	}
-	public void setTotal_amount_paid(double total_amount_paid) {
-		this.total_amount_paid = total_amount_paid;
 	}
 	public int getTotal_orders() {
 		return total_orders;
@@ -127,9 +104,9 @@ public class Customer {
 	public void setArea_type(String area_type) {
 		this.area_type = area_type;
 	}
+	private String phone;
+	private String password;
 	private boolean is_enabled;
-	private double	total_amount_paid;
 	private int total_orders;
 	private String area_type;
-	
 }

@@ -1,7 +1,5 @@
 package PTUDHTTT.model;
 
-import java.util.Optional;
-
 public class ApiResponse<T> {
 	int code;
 	String message;

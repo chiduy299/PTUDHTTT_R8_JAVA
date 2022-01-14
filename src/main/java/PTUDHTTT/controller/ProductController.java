@@ -81,9 +81,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/get_essential_product")
-	public ResponseEntity<ApiResponse<List<Product>>> GetEssentialProduct() {
+	public ResponseEntity<ApiResponse<List<Product>>> GetEssentialProduct(@RequestParam(required=false,defaultValue = "0")int page, @RequestParam(required=false,defaultValue = "0") int limit) {
 		try {
-			Query query = new Query();
+			Query query = new Query().skip(page*limit).limit(limit);
 			query.with(Sort.by(Sort.Direction.DESC, "sell_number"));
 			List<Product> productlst = mongoTemplate.find(query,Product.class);
 			if (productlst.isEmpty()) {
@@ -97,9 +97,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/get_product_by_date")
-	public ResponseEntity<ApiResponse<List<Product>>> GetProductByDate(@RequestParam String from_date, @RequestParam String to_date) {
+	public ResponseEntity<ApiResponse<List<Product>>> GetProductByDate(@RequestParam String from_date, @RequestParam String to_date, @RequestParam(required=false,defaultValue = "0")int page, @RequestParam(required=false,defaultValue = "0") int limit) {
 		try {
-
 	        //default, ISO_LOCAL_DATE
 	        ZoneId zoneId = ZoneId.systemDefault();
 	        LocalDate local_from_date = LocalDate.parse(from_date);
@@ -110,13 +109,29 @@ public class ProductController {
 	        Query query=Query.query( new Criteria().andOperator(
 	        		Criteria.where("create_at").gte(epoch_from_date),
 	        		Criteria.where("create_at").lte(epoch_to_date)
-	                ));
+	                )).skip(page*limit).limit(limit);
 			List<Product> productlst = mongoTemplate.find(query, Product.class);
 			ApiResponse<List<Product>> resp = new ApiResponse<List<Product>>(0,"Success",productlst);
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 			
 		} catch (Exception e) {
 			System.out.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/product/get_product_by_store_id")
+	public ResponseEntity<ApiResponse<List<Product>>> GetProductByStore(@RequestParam String id_store, @RequestParam(required=false,defaultValue = "0")int page, @RequestParam(required=false,defaultValue = "0") int limit) {
+		try {
+			Query query = new Query().skip(page*limit).limit(limit);
+			query.addCriteria(Criteria.where("store_id").is(id_store));
+			List<Product> productlst = mongoTemplate.find(query, Product.class);
+			if (productlst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			ApiResponse<List<Product>> resp = new ApiResponse<List<Product>>(0,"Success",productlst);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
