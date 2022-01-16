@@ -2,6 +2,7 @@ package PTUDHTTT.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import PTUDHTTT.model.ApiResponse;
+import PTUDHTTT.model.Product;
 import PTUDHTTT.model.Store;
 import PTUDHTTT.repository.StoreRepository;
 
@@ -65,6 +67,20 @@ public class StoreController {
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/store/get_by_id")
+	public ResponseEntity<ApiResponse<Optional<Store>>> GetStoreById(@RequestParam String store_id) {
+		try {
+			Optional<Store> storelst = Prepo.findById(store_id);
+			if (storelst.isPresent() == false) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			ApiResponse<Optional<Store>> resp = new ApiResponse<Optional<Store>>(0,"Success",storelst);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
