@@ -105,10 +105,12 @@ public class ProductController {
 	        LocalDate local_to_date = LocalDate.parse(to_date);
 	        long epoch_from_date = local_from_date.atStartOfDay(zoneId).toEpochSecond();
 	        long epoch_to_date = local_to_date.atStartOfDay(zoneId).toEpochSecond();
-	        
+	        System.out.println(epoch_from_date);
+	        System.out.println(epoch_to_date);
+
 	        Query query=Query.query( new Criteria().andOperator(
-	        		Criteria.where("create_at").gte(epoch_from_date),
-	        		Criteria.where("create_at").lte(epoch_to_date)
+	        		Criteria.where("created_at").gte(epoch_from_date),
+	        		Criteria.where("created_at").lte(epoch_to_date)
 	                )).skip(page*limit).limit(limit);
 			List<Product> productlst = mongoTemplate.find(query, Product.class);
 			ApiResponse<List<Product>> resp = new ApiResponse<List<Product>>(0,"Success",productlst);
